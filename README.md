@@ -1,4 +1,4 @@
-# Android Small To-do List Application
+# Android Basic To-do List Application
 
 "To-do List" Application
 with an add-button, field to add new tasks and marking completed tasks
