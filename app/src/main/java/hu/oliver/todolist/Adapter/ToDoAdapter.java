@@ -1,5 +1,6 @@
 package hu.oliver.todolist.Adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     private MainActivity activity;
     private DatabaseHandler db;
 
+
+    // MAIN METHODS
 
     public ToDoAdapter(DatabaseHandler db, MainActivity activity) {
         this.db = db;
@@ -54,6 +57,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     }
 
 
+    // GET / SET / TO METHODS
+
     public int getItemCount() {
         return toDoList.size();
     }
@@ -62,10 +67,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         return n != 0;
     }
 
+    public Context getContext() {
+        return activity;
+    }
+
     public void setTasks(List<ToDoModel> toDoList) {
         this.toDoList = toDoList;
         notifyDataSetChanged();
     }
+
+
+    // CRUD
 
     public void editItem(int position) {
         ToDoModel item = toDoList.get(position);
@@ -79,6 +91,16 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
     }
 
+    public void deleteItem(int position) {
+        ToDoModel item = toDoList.get(position);
+        db.deleteTask(item.getId());
+
+        toDoList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+
+    // STATIC CLASS
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox task;
