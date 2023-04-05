@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -13,11 +14,10 @@ import hu.oliver.myapplication.R;
 import hu.oliver.todolist.Adapter.ToDoAdapter;
 import hu.oliver.todolist.Model.ToDoModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogCloseListener {
 
     private RecyclerView tasksRecyclerView;
     private ToDoAdapter tasksAdapter;
-
     private List<ToDoModel> taskList;
 
     @Override
@@ -50,5 +50,10 @@ public class MainActivity extends AppCompatActivity {
         // update RecyclerView to show the tasks
         tasksAdapter.setTasks(taskList);
 
+    }
+
+    @Override
+    public void handleDialogClose(DialogInterface dialog) {
+        taskList = db.getAllTasks();
     }
 }
